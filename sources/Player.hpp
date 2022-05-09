@@ -70,7 +70,12 @@ namespace coup{
         bool must_coup() const;
         bool& must_coup();
 
-        string role() const;
-        string& role();
+        virtual string role() const;
+        virtual string& role();
+
+        int getIndex(vector<string>,string);
+
+        void addBack(Player* p);
+        void addPlayer(string);
     };
 }

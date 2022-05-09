@@ -9,16 +9,20 @@ using namespace std;
 namespace coup{
 
     class Assassin : public Player{
+        vector<Player*> victims_list;
 
-        public:
+    public:
             Assassin(coup::Game& g, string n): Player(g,n,0, false){
                 player_roles = "Assassin";
-                if (g.players_names.size() < 6){
-                    g.players_names.push_back(n);
-                }
+                addPlayer(n);
+                int index = getIndex(g.players_names,n);
+                g.playing_members.insert(pair<int,Player*>(index,& *this));
             }
 
-        void coup(Player p1);
+        void coup(Player p1) override;
+        string role() const override;
+        string& role() override;
         void block(Player p1);
+        vector<Player*> victim();
     };
 }

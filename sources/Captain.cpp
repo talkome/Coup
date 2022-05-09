@@ -32,3 +32,11 @@ void coup::Captain::block(coup::Player p1) {
         throw invalid_argument("Wrong Player Turn");
     }
 }
+
+string coup::Captain::role() const {
+    return this->player_roles;
+}
+
+string &coup::Captain::role() {
+    return this->player_roles;
+}

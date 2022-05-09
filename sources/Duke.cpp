@@ -28,3 +28,11 @@ void coup::Duke::block(coup::Player p1) {
         throw invalid_argument("Wrong Player Turn");
     }
 }
+
+string coup::Duke::role() const {
+    return this->player_roles;
+}
+
+string &coup::Duke::role() {
+    return this->player_roles;
+}

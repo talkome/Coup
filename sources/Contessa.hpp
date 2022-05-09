@@ -2,7 +2,9 @@
  * Created by talko on 4/24/22.
  */
 
+#pragma once
 #include "Player.hpp"
+#include "Assassin.hpp"
 
 using namespace std;
 
@@ -13,11 +15,13 @@ namespace coup {
     public:
         Contessa(coup::Game& g, string n) : Player(g,n,0, false) {
             player_roles = "Contessa";
-            if (g.players_names.size() < 6){
-                g.players_names.push_back(n);
-            }
+            addPlayer(n);
+            int index = getIndex(g.players_names,n);
+            g.playing_members.insert(pair<int,Player*>(index,& *this));
         }
 
-        void block(Player p1);
+        string role() const override;
+        string& role() override;
+        void block(Assassin a1);
     };
 }

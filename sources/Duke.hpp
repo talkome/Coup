@@ -13,12 +13,14 @@ namespace coup {
     public:
         Duke(coup::Game& g, string n) : Player(g,n,0,false) {
             player_roles = "Duke";
-            if (g.players_names.size() < 6){
-                g.players_names.push_back(n);
-            }
+            addPlayer(n);
+            int index = getIndex(g.players_names,n);
+            g.playing_members.insert(pair<int,Player*>(index,& *this));
         }
 
         void tax();
+        string role() const override;
+        string& role() override;
         void block(Player p1);
     };
 

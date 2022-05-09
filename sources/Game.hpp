@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
+#include <map>
 #include "Player.hpp"
 
 using namespace std;
@@ -18,7 +19,7 @@ namespace coup{
 
         public:
             vector<string> players_names;
-            vector<Player*> playing_members;
+            map<int,Player*> playing_members;
             unsigned long i;
 
             string win;
@@ -28,7 +29,7 @@ namespace coup{
                 i = 0;
             }
 
-            vector<string> players() const;
+            map<int,Player*> players() const;
             string turn() const;
             string winner() const;
     };

@@ -4,12 +4,12 @@
 
 #include "Game.hpp"
 
-vector<string> coup::Game::players() const {
-    return this->players_names;
+map<int,coup::Player*> coup::Game::players() const {
+    return this->playing_members;
 }
 
 string coup::Game::turn() const {
-    return players_names[i];
+    return this->playing_members.at(i)->name();
 }
 
 string coup::Game::winner() const {
