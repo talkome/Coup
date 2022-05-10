@@ -16,7 +16,7 @@ void coup::Ambassador::transfer(coup::Player p1, coup::Player p2) {
     }
 }
 
-void coup::Ambassador::block(coup::Player p1) {
+void coup::Ambassador::block(coup::Player &p1) {
     if (game->turn() == this->name() && !this->is_dead() && !this->must_coup()){
         int price = 2;
         size_t size = p1.moves().size();

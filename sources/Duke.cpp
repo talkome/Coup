@@ -5,7 +5,7 @@
 #include "Duke.hpp"
 
 void coup::Duke::tax() {
-    if (game->turn() == this->name() && !this->is_dead() && !this->must_coup()){
+    if (game->turn() == this->name() && !this->must_coup()){
         int price = 3;
         this->coins() += price;
         this->moves().push_back(TAX);
@@ -15,17 +15,14 @@ void coup::Duke::tax() {
     }
 }
 
-void coup::Duke::block(coup::Player p1) {
-    if (game->turn() == this->name() && !this->is_dead() && !this->must_coup()){
+void coup::Duke::block(coup::Player &p1) {
+    if (!this->must_coup()){
         size_t size = p1.moves().size();
         int price = 2;
-        if (p1.moves().at(size) == FOREIGN_AID){
+        if (p1.moves().at(size-1) == FOREIGN_AID){
             p1.pay(price);
         }
         this->moves().push_back(BLOCK);
-        next_turn();
-    } else {
-        throw invalid_argument("Wrong Player Turn");
     }
 }
 

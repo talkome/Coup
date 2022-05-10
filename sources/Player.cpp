@@ -15,10 +15,17 @@ void coup::Player::pay(int num) {
 }
 
 void coup::Player::next_turn() {
-    size_t size = game->players_names.size();
+    size_t size = game->playing_queue.size();
     game->i++;
-    if (game->i >= game->players_names.size()){
+    if (game->i >= size) {
         game->i = game->i % size;
+    }
+
+    while (game->playing_queue[game->i]->is_dead()){
+        game->i++;
+        if (game->i >= size) {
+            game->i = game->i % size;
+        }
     }
 }
 
@@ -49,16 +56,17 @@ void coup::Player::foreign_aid() {
     }
 }
 
-void coup::Player::coup(coup::Player p1) {
+void coup::Player::coup(coup::Player &p1) {
     if (std::find(game->players_names.begin(), game->players_names.end(), p1.name()) != game->players_names.end()) {
         int price = 7;
         this->pay(price);
         p1.is_dead() = true;
-        this->game->playing_members.erase(getIndex(this->game->players_names,p1.name()));
+        this->game->players_names.erase(p1.name());
         this->players_moves.push_back(COUP);
+        this->must_coup() = false;
         next_turn();
     } else {
-        throw invalid_argument("This Player not playing_members");
+        throw invalid_argument("This Player not playing_queue");
     }
 }
 
@@ -106,26 +114,15 @@ vector<coup::MOVES> coup::Player::moves(){
     return this->players_moves;
 }
 
-int coup::Player::getIndex(vector<string> v,string k) {
-    auto it = find(v.begin(), v.end(), k);
-    if (!(it != v.end())) {
-        throw runtime_error("invalid argument");
-    } else {
-        int result = it - v.begin();
-        return result;
-    }
-}
-
 void coup::Player::addBack(Player* p) {
-    int index = getIndex(this->game->players_names, p->name());
-    this->game->playing_members.insert(pair<int,Player*>(index,p));
+    p->is_dead() = false;
+    this->game->players_names.insert(p->name());
 }
 
 void coup::Player::addPlayer(string p_name) {
    if (this->game->players_names.size() < 7 ) {
-       this->game->players_names.push_back(p_name);
+       this->game->players_names.insert(p_name);
    } else {
        throw invalid_argument("Invalid number of players");
    }
 }
-

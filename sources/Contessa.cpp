@@ -4,20 +4,16 @@
 
 #include "Contessa.hpp"
 
-void coup::Contessa::block(coup::Assassin a1) {
-    if (game->turn() == this->name() && !this->is_dead() && !this->must_coup()){
-        int price = 2;
-        a1.pay(price);
-        size_t size = a1.moves().size();
-        if (a1.moves().at(size) == COUP){
-            for (int i = 0; i < a1.victim().size(); ++i) {
-                addBack(a1.victim()[i]);
+void coup::Contessa::block(coup::Assassin &p1) {
+    if (!this->must_coup()) {
+        size_t size = p1.moves().size();
+        if (p1.moves().at(size - 1) == COUP) {
+            for (auto & i : p1.victims_list) {
+                addBack(i);
             }
+            p1.victims_list.clear();
         }
         this->moves().push_back(BLOCK);
-        next_turn();
-    } else {
-        throw invalid_argument("Wrong Player Turn");
     }
 }
 

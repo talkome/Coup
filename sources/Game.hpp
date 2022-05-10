@@ -6,8 +6,7 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
-#include <map>
-#include "Player.hpp"
+#include <set>
 
 using namespace std;
 
@@ -18,10 +17,9 @@ namespace coup{
     class Game {
 
         public:
-            vector<string> players_names;
-            map<int,Player*> playing_members;
+            set<string> players_names;
+            vector<Player*> playing_queue;
             unsigned long i;
-
             string win;
 
             Game(){
@@ -29,9 +27,9 @@ namespace coup{
                 i = 0;
             }
 
-            map<int,Player*> players() const;
+            set<string> players() const;
             string turn() const;
-            string winner() const;
+            string& winner();
     };
 }
 

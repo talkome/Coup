@@ -14,12 +14,11 @@ namespace coup{
             Ambassador(coup::Game& g, string n): Player(g,n,0,false){
                 player_roles = "Ambassador";
                 addPlayer(n);
-                int index = getIndex(g.players_names,n);
-                g.playing_members.insert(pair<int,Player*>(index,& *this));
+                g.playing_queue.push_back(& *this);
             }
 
         void transfer(Player p1, Player p2);
-        void block(Player p1);
+        void block(Player &p1);
 
     };
 

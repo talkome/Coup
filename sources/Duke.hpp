@@ -14,14 +14,13 @@ namespace coup {
         Duke(coup::Game& g, string n) : Player(g,n,0,false) {
             player_roles = "Duke";
             addPlayer(n);
-            int index = getIndex(g.players_names,n);
-            g.playing_members.insert(pair<int,Player*>(index,& *this));
+            g.playing_queue.push_back(& *this);
         }
 
         void tax();
         string role() const override;
         string& role() override;
-        void block(Player p1);
+        void block(Player &p1);
     };
 
 }

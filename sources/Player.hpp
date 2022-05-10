@@ -51,7 +51,7 @@ namespace coup{
 
         void income();
         void foreign_aid();
-        virtual void coup(Player p1);
+        virtual void coup(Player &p1);
 
         void next_turn();
         void pay(int);
@@ -73,9 +73,7 @@ namespace coup{
         virtual string role() const;
         virtual string& role();
 
-        int getIndex(vector<string>,string);
-
-        void addBack(Player* p);
+        void addBack(Player*);
         void addPlayer(string);
     };
 }

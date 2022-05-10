@@ -18,7 +18,7 @@ void coup::Captain::steal(coup::Player p1) {
     }
 }
 
-void coup::Captain::block(coup::Player p1) {
+void coup::Captain::block(coup::Player &p1) {
     if (game->turn() == this->name() && !this->is_dead() && !this->must_coup()){
         int price = 2;
         p1.pay(price);
