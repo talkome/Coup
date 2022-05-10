@@ -12,7 +12,7 @@
 
 using namespace std;
 
-void coup::Player::pay(int const num) {
+void coup::Player::pay(int num) {
     if (this->coins() >= num){
         this->coins() -= num;
     } else {
@@ -22,25 +22,33 @@ void coup::Player::pay(int const num) {
 
 void coup::Player::next_turn() {
     size_t size = game->playing_queue.size();
-    game->i++;
-    if (game->i >= size) {
-        game->i = game->i % size;
-    }
-
-    while (game->playing_queue[game->i]->is_dead()){
+    this->game->begin = true;
+    if (this->game->players_names.size() != 1){
         game->i++;
         if (game->i >= size) {
             game->i = game->i % size;
         }
+
+        while (game->playing_queue[game->i]->is_dead()){
+            game->i++;
+            if (game->i >= size) {
+                game->i = game->i % size;
+            }
+        }
+    } else {
+        throw invalid_argument("Invalid Number of Players");
     }
+
 }
 
 void coup::Player::income() {
-    if (game->turn() == this->name()){
+    if (game->turn() == this->name() && !this->must_coup()){
+        this->game->begin = true;
         this->coins()++;
         this->players_moves.push_back(INCOME);
         if (this->coins() >= MAX_COINS){
             mustCoup = true;
+            throw invalid_argument("You are required to make a coup");
         }
         next_turn();
     } else {
@@ -49,11 +57,12 @@ void coup::Player::income() {
 }
 
 void coup::Player::foreign_aid() {
-    if (game->turn() == this->name()){
+    if (game->turn() == this->name() && !this->must_coup()){
         this->coins() += FOREIGN_AID_MONEY;
         this->players_moves.push_back(FOREIGN_AID);
         if (this->coins() >= MAX_COINS){
             mustCoup = true;
+            throw invalid_argument("You are required to make a coup");
         }
         next_turn();
     } else {
@@ -66,7 +75,7 @@ void coup::Player::coup(coup::Player &p1) {
         int price = COUP_PRICE;
         this->pay(price);
         p1.is_dead() = true;
-        this->game->players_names.erase(p1.name());
+        this->game->players_names.erase(remove(this->game->players_names.begin(), this->game->players_names.end(), p1.name()), this->game->players_names.end());
         this->players_moves.push_back(COUP);
         this->must_coup() = false;
         next_turn();
@@ -121,12 +130,12 @@ vector<coup::MOVES> coup::Player::moves(){
 
 void coup::Player::addBack(Player* p) {
     p->is_dead() = false;
-    this->game->players_names.insert(p->name());
+    this->game->players_names.push_back(p->name());
 }
 
 void coup::Player::addPlayer(string const &p_name) {
-   if (this->game->players_names.size() < MAX_PLAYERS ) {
-       this->game->players_names.insert(p_name);
+   if (this->game->players_names.size() < MAX_PLAYERS && find(this->game->players_names.begin(), this->game->players_names.end(), p_name) == this->game->players_names.end() && !this->game->begin) {
+       this->game->players_names.push_back(p_name);
    } else {
        throw invalid_argument("Invalid number of players");
    }

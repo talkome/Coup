@@ -10,7 +10,7 @@ using namespace std;
 
 namespace coup{
 
-    enum MOVES { INCOME = 1, FOREIGN_AID = 2, COUP = 3, TAX = 4, BLOCK = 5, TRANSFER = 6, STEAL = 7 };
+    enum MOVES { INCOME = 1, FOREIGN_AID = 2, COUP = 3, TAX = 4, BLOCK = 5, TRANSFER = 6, STEAL = 7, ASSASSIN_ATTACK = 8 };
 
     class Game;
 
@@ -54,7 +54,7 @@ namespace coup{
         virtual void coup(Player &p1);
 
         void next_turn();
-        void pay(const int);
+        void pay(int);
 
         vector<MOVES> moves();
 

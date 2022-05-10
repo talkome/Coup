@@ -5,7 +5,7 @@
 #include "Game.hpp"
 #include "Player.hpp"
 
-set<string> coup::Game::players() {
+vector<string> coup::Game::players() {
     return this->players_names;
 }
 
@@ -15,16 +15,16 @@ string coup::Game::turn() {
 }
 
 string& coup::Game::winner() {
-    if (this->players_names.size() == 1){
-        for (int j = 0; j < this->playing_queue.size(); ++j) {
+    if (this->players_names.size() == 1 && this->begin){
+        for (size_t j = 0; j < this->playing_queue.size(); ++j) {
             if (!playing_queue[j]->is_dead()){
                 win = playing_queue[j]->name();
             }
         }
+        return win;
     } else {
         throw invalid_argument("No Winner Yet");
     }
-    return win;
 }
 
 

@@ -4,13 +4,11 @@
 
 #include "Captain.hpp"
 
-void coup::Captain::steal(coup::Player p1) {
-    if (game->turn() == this->name() && !this->is_dead() && !this->must_coup()){
-        if (p1.role() != "Captain" || p1.role() != "Ambassador"){
-            int price = 2;
-            this->coins() += price;
-            p1.pay(price);
-        }
+void coup::Captain::steal(coup::Player p1) { // TODO: check
+    if (game->turn() == this->name() && !this->must_coup()){
+        const int price = 1;
+        this->coins() += price;
+        p1.pay(price);
         this->moves().push_back(STEAL);
         next_turn();
     } else {
@@ -19,15 +17,23 @@ void coup::Captain::steal(coup::Player p1) {
 }
 
 void coup::Captain::block(coup::Player &p1) {
-    if (game->turn() == this->name() && !this->is_dead() && !this->must_coup()){
-        int price = 2;
-        p1.pay(price);
-        size_t size = p1.moves().size();
-        if (p1.moves().at(size) == STEAL){
-            p1.pay(price);
+    if (game->turn() == this->name() && !this->must_coup()){
+        if (p1.is_dead()){
+            throw invalid_argument("This Player is lost");
         }
-        this->moves().push_back(BLOCK);
-        next_turn();
+        if (p1.role() == "Captain"){
+            const int price = 2;
+            p1.pay(price);
+            size_t size = p1.moves().size();
+            if (p1.moves().at(size) == STEAL){
+                p1.pay(price);
+            }
+            this->moves().push_back(BLOCK);
+            next_turn();
+        } else {
+            throw invalid_argument("You Can Only Block Captain");
+        }
+
     } else {
         throw invalid_argument("Wrong Player Turn");
     }

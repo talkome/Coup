@@ -17,17 +17,19 @@ namespace coup{
     class Game {
 
         public:
-            set<string> players_names;
+            vector<string> players_names;
             vector<Player*> playing_queue;
             unsigned long i;
             string win;
+            bool begin;
 
             Game(){
                 win = "playing";
+                begin = false;
                 i = 0;
             }
 
-            set<string> players();
+            vector<string> players();
             string turn();
             string& winner();
     };

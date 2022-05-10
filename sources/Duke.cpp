@@ -5,7 +5,10 @@
 #include "Duke.hpp"
 
 void coup::Duke::tax() {
-    if (game->turn() == this->name() && !this->must_coup()){
+    if (game->turn() == this->name()){
+        if (this->must_coup()){
+            throw invalid_argument("You are required to make a coup");
+        }
         int price = 3;
         this->coins() += price;
         this->moves().push_back(TAX);
@@ -16,13 +19,15 @@ void coup::Duke::tax() {
 }
 
 void coup::Duke::block(coup::Player &p1) {
-    if (!this->must_coup()){
+    if (!p1.is_dead()){
         size_t size = p1.moves().size();
         int price = 2;
         if (p1.moves().at(size-1) == FOREIGN_AID){
             p1.pay(price);
         }
         this->moves().push_back(BLOCK);
+    } else {
+        throw invalid_argument("This Player is lost");
     }
 }
 

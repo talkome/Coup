@@ -5,7 +5,7 @@
 #include "Contessa.hpp"
 
 void coup::Contessa::block(coup::Assassin &p1) {
-    if (!this->must_coup()) {
+    if (!p1.is_dead()) {
         size_t size = p1.moves().size();
         if (p1.moves().at(size - 1) == COUP) {
             for (auto & i : p1.victims_list) {
@@ -14,6 +14,8 @@ void coup::Contessa::block(coup::Assassin &p1) {
             p1.victims_list.clear();
         }
         this->moves().push_back(BLOCK);
+    } else {
+        throw invalid_argument("This Player is lost");
     }
 }
 
