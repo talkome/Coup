@@ -6,11 +6,26 @@
 
 void coup::Captain::steal(coup::Player p1) { // TODO: check
     if (game->turn() == this->name() && !this->must_coup()){
-        const int price = 1;
-        this->coins() += price;
-        p1.pay(price);
-        this->moves().push_back(STEAL);
-        next_turn();
+        const int first_price = 1;
+        const int second_price = 2;
+
+        if (!p1.is_dead()){
+            if (p1.coins() < first_price) {
+                throw invalid_argument("This Player Has No Money");
+            } else if (p1.coins() == first_price) {
+                p1.pay(first_price);
+                this->coins() += first_price;
+                this->moves().push_back(STEAL);
+            } else {
+                p1.pay(second_price);
+                this->coins() += second_price;
+                this->moves().push_back(STEAL);
+            }
+            next_turn();
+        } else {
+            throw invalid_argument("This Player is lost");
+        }
+
     } else {
         throw invalid_argument("Wrong Player Turn");
     }

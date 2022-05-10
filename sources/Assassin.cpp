@@ -37,7 +37,7 @@ void coup::Assassin::coup(coup::Player &p1) {
     }
 }
 
-void coup::Assassin::block(coup::Player &p1) { // TODO: check if necessary
+void coup::Assassin::block(coup::Player &p1) {
     if (game->turn() == this->name() && !this->must_coup()){
         p1.pay(BLOCK_PRICE);
         size_t size = p1.moves().size();
