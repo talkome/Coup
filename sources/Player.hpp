@@ -54,7 +54,7 @@ namespace coup{
         virtual void coup(Player &p1);
 
         void next_turn();
-        void pay(int);
+        void pay(const int);
 
         vector<MOVES> moves();
 
@@ -74,6 +74,6 @@ namespace coup{
         virtual string& role();
 
         void addBack(Player*);
-        void addPlayer(string);
+        void addPlayer(string const &);
     };
 }

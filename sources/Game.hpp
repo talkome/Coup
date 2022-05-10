@@ -27,8 +27,8 @@ namespace coup{
                 i = 0;
             }
 
-            set<string> players() const;
-            string turn() const;
+            set<string> players();
+            string turn();
             string& winner();
     };
 }

@@ -17,7 +17,7 @@ namespace coup{
                 g.playing_queue.push_back(& *this);
             }
 
-        void transfer(Player p1, Player p2);
+        void transfer(Player const &p1, Player const &p2);
         void block(Player &p1);
 
     };

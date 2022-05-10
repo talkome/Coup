@@ -5,11 +5,11 @@
 #include "Game.hpp"
 #include "Player.hpp"
 
-set<string> coup::Game::players() const {
+set<string> coup::Game::players() {
     return this->players_names;
 }
 
-string coup::Game::turn() const {
+string coup::Game::turn() {
     Player* selected = this->playing_queue[i];
     return selected->name();
 }

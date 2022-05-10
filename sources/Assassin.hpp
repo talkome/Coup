@@ -2,13 +2,15 @@
  * Created by talko on 4/24/22.
  */
 
+#pragma once
 #include "Player.hpp"
 
 using namespace std;
 
 namespace coup{
 
-    class Assassin : public Player{
+    class Assassin : public Player {
+
     public:
         vector<Player*> victims_list;
 

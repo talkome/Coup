@@ -34,7 +34,7 @@ StudentTest2.cpp:
 	curl https://raw.githubusercontent.com/Esther-Bi/B-HW4-Test/main/Test.cpp > $@
 
 # Benjamin Saldman
-StudentTest3.cpp: 
+StudentTest3.cpp:
 	curl https://raw.githubusercontent.com/BenjaminSaldman/coup-a/main/Test.cpp > $@
 
 tidy:

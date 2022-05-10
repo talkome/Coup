@@ -4,9 +4,15 @@
 
 #include "Player.hpp"
 
+#define MAX_PLAYERS 7
+#define MAX_COINS 10
+#define COUP_PRICE 7
+#define FOREIGN_AID_MONEY 2
+
+
 using namespace std;
 
-void coup::Player::pay(int num) {
+void coup::Player::pay(int const num) {
     if (this->coins() >= num){
         this->coins() -= num;
     } else {
@@ -33,7 +39,7 @@ void coup::Player::income() {
     if (game->turn() == this->name()){
         this->coins()++;
         this->players_moves.push_back(INCOME);
-        if (this->coins() >= 10){
+        if (this->coins() >= MAX_COINS){
             mustCoup = true;
         }
         next_turn();
@@ -44,10 +50,9 @@ void coup::Player::income() {
 
 void coup::Player::foreign_aid() {
     if (game->turn() == this->name()){
-        int price = 2;
-        this->coins() += price;
+        this->coins() += FOREIGN_AID_MONEY;
         this->players_moves.push_back(FOREIGN_AID);
-        if (this->coins() >= 10){
+        if (this->coins() >= MAX_COINS){
             mustCoup = true;
         }
         next_turn();
@@ -58,7 +63,7 @@ void coup::Player::foreign_aid() {
 
 void coup::Player::coup(coup::Player &p1) {
     if (std::find(game->players_names.begin(), game->players_names.end(), p1.name()) != game->players_names.end()) {
-        int price = 7;
+        int price = COUP_PRICE;
         this->pay(price);
         p1.is_dead() = true;
         this->game->players_names.erase(p1.name());
@@ -119,8 +124,8 @@ void coup::Player::addBack(Player* p) {
     this->game->players_names.insert(p->name());
 }
 
-void coup::Player::addPlayer(string p_name) {
-   if (this->game->players_names.size() < 7 ) {
+void coup::Player::addPlayer(string const &p_name) {
+   if (this->game->players_names.size() < MAX_PLAYERS ) {
        this->game->players_names.insert(p_name);
    } else {
        throw invalid_argument("Invalid number of players");

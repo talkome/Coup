@@ -4,10 +4,13 @@
 
 #include "Assassin.hpp"
 
+#define COUP_PRICE 3
+#define BLOCK_PRICE 7
+
+
 void coup::Assassin::coup(coup::Player &p1) {
     if (std::find(game->players_names.begin(),game->players_names.end(),p1.name()) != game->players_names.end()) {
-        int price = 3;
-        this->pay(price);
+        this->pay(COUP_PRICE);
         p1.is_dead() = true;
         this->game->players_names.erase(p1.name());
         this->players_moves.push_back(COUP);
@@ -21,8 +24,7 @@ void coup::Assassin::coup(coup::Player &p1) {
 
 void coup::Assassin::block(coup::Player &p1) {
     if (game->turn() == this->name() && !this->must_coup()){
-        int price = 7;
-        p1.pay(price);
+        p1.pay(BLOCK_PRICE);
         size_t size = p1.moves().size();
         if (p1.moves().at(size) == COUP){
             for (int i = 0; i < this->victims_list.size(); ++i) {
