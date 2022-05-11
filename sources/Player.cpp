@@ -4,7 +4,7 @@
 
 #include "Player.hpp"
 
-#define MAX_PLAYERS 7
+#define MAX_PLAYERS 6
 #define MAX_COINS 10
 #define COUP_PRICE 7
 #define FOREIGN_AID_MONEY 2
@@ -39,6 +39,9 @@ void coup::Player::next_turn() {
 }
 
 void coup::Player::income() {
+    if(this->game->players_names.size() == 1){
+        throw invalid_argument("The game must contain at least 2 players");
+    }
     if(this->must_coup()){
         throw invalid_argument("You are required to make a coup");
     }
