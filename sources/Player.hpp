@@ -57,6 +57,7 @@ namespace coup{
 
         void next_turn();
         void pay(int);
+        void get_paid(int);
 
         vector<MOVES> moves();
 

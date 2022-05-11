@@ -9,7 +9,7 @@ void coup::Ambassador::transfer(coup::Player &p1, coup::Player &p2) {
         if(!p1.is_dead() && !p2.is_dead()){
             const int price = 1;
             p1.pay(price);
-            p2.coins() += price;
+            p2.get_paid(price);
             this->moves().push_back(TRANSFER);
             next_turn();
         } else {
@@ -36,11 +36,11 @@ void coup::Ambassador::block(coup::Player &p1) {
         const int second_price = 2;
         if (p1.moves().at(size-1) == STEAL_FIRST_PRICE) {
             p1.pay(first_price);
-            p1.robbed->coins() += first_price;
+            p1.robbed->get_paid(first_price);
 
         } else if (p1.moves().at(size-1) == STEAL_SECOND_PRICE) {
             p1.pay(second_price);
-            p1.robbed->coins() += second_price;
+            p1.robbed->get_paid(second_price);
         }
         this->moves().push_back(BLOCK);
         next_turn();

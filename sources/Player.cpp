@@ -20,6 +20,13 @@ void coup::Player::pay(int num) {
     }
 }
 
+void coup::Player::get_paid(int num) {
+    this->coins() += num;
+    if (this->coins() >= MAX_COINS){
+        this->must_coup() = true;
+    }
+}
+
 void coup::Player::next_turn() {
     size_t size = game->playing_queue.size();
     this->game->playing = true;
@@ -47,11 +54,9 @@ void coup::Player::income() {
     }
     if (game->turn() == this->name()){
         this->game->playing = true;
-        this->coins()++;
+        const int price = 1;
+        this->get_paid(price);
         this->players_moves.push_back(INCOME);
-        if (this->coins() >= MAX_COINS){
-            mustCoup = true;
-        }
         next_turn();
     } else {
         throw invalid_argument("Wrong Player Turn");
@@ -66,11 +71,9 @@ void coup::Player::foreign_aid() {
         throw invalid_argument("You are required to make a coup");
     }
     if (game->turn() == this->name()){
-        this->coins() += FOREIGN_AID_MONEY;
+        const int price = FOREIGN_AID_MONEY;
+        this->get_paid(price);
         this->players_moves.push_back(FOREIGN_AID);
-        if (this->coins() >= MAX_COINS){
-            mustCoup = true;
-        }
         next_turn();
     } else {
         throw invalid_argument("Wrong Player Turn");

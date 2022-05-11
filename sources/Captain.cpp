@@ -14,12 +14,12 @@ void coup::Captain::steal(coup::Player &p1) {
                 throw invalid_argument("This Player Has No Money");
             } else if (p1.coins() == first_price) {
                 p1.pay(first_price);
-                this->coins() += first_price;
+                this->get_paid(first_price);
                 this->players_moves.push_back(STEAL_FIRST_PRICE);
                 this->robbed = &p1;
             } else {
                 p1.pay(second_price);
-                this->coins() += second_price;
+                this->get_paid(second_price);
                 this->players_moves.push_back(STEAL_SECOND_PRICE);
                 this->robbed = &p1;
             }
@@ -34,7 +34,10 @@ void coup::Captain::steal(coup::Player &p1) {
 }
 
 void coup::Captain::block(coup::Player &p1) {
-    if (game->turn() == this->name() && !this->must_coup()){
+    if (this->must_coup()){
+        throw invalid_argument("You are required to make a coup");
+    }
+    if (game->turn() == this->name()){
         if (p1.is_dead()){
             throw invalid_argument("This Player is lost");
         }

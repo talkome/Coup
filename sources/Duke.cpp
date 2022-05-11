@@ -10,7 +10,7 @@ void coup::Duke::tax() {
             throw invalid_argument("You are required to make a coup");
         }
         int price = 3;
-        this->coins() += price;
+        this->get_paid(price);
         this->moves().push_back(TAX);
         next_turn();
     } else {
