@@ -59,6 +59,9 @@ void coup::Player::income() {
 }
 
 void coup::Player::foreign_aid() {
+    if(this->game->players_names.size() == 1){
+        throw invalid_argument("The game must contain at least 2 players");
+    }
     if (this->must_coup()){
         throw invalid_argument("You are required to make a coup");
     }
@@ -134,7 +137,13 @@ vector<coup::MOVES> coup::Player::moves(){
 
 void coup::Player::addBack(Player* p) {
     p->is_dead() = false;
-    this->game->players_names.push_back(p->name());
+    vector<string> new_players_name;
+    for (auto & player : this->game->playing_queue) {
+        if (!player->is_dead()){
+            new_players_name.push_back(player->name());
+        }
+    }
+    this->game->players_names = new_players_name;
 }
 
 void coup::Player::addPlayer(string const &p_name) {
@@ -143,9 +152,6 @@ void coup::Player::addPlayer(string const &p_name) {
     }
     if (this->game->is_over()){
         throw invalid_argument("No new players can be added after the game has started");
-    }
-    if (this->game->players_names.size() > 1 && find(this->game->players_names.begin(), this->game->players_names.end(), p_name) != this->game->players_names.end()){
-        throw invalid_argument("This name is in use by another player");
     }
     if (this->game->players_names.size() < MAX_PLAYERS) {
         this->game->players_names.push_back(p_name);

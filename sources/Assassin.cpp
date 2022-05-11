@@ -34,7 +34,7 @@ void coup::Assassin::coup(coup::Player &p1) {
         }
 
     } else {
-
+        throw invalid_argument("Wrong Player Turn");
     }
 }
 
