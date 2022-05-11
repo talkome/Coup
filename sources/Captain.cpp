@@ -4,7 +4,7 @@
 
 #include "Captain.hpp"
 
-void coup::Captain::steal(coup::Player p1) { // TODO: check
+void coup::Captain::steal(coup::Player &p1) { // TODO: check
     if (game->turn() == this->name() && !this->must_coup()){
         const int first_price = 1;
         const int second_price = 2;

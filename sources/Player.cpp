@@ -73,7 +73,7 @@ void coup::Player::foreign_aid() {
 
 void coup::Player::coup(coup::Player &p1) {
     if (!p1.is_dead()) {
-        int price = COUP_PRICE;
+        const int price = 7;
         this->pay(price);
         p1.is_dead() = true;
         this->game->players_names.erase(remove(this->game->players_names.begin(), this->game->players_names.end(), p1.name()), this->game->players_names.end());

@@ -19,7 +19,7 @@ namespace coup {
 
         string role() const override;
         string& role() override;
-        void steal(Player p1);
+        void steal(Player &p1);
         void block(Player &p1);
     };
 }
