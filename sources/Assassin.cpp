@@ -8,13 +8,10 @@
 
 
 void coup::Assassin::coup(coup::Player &p1) {
-    if (std::find(game->players_names.begin(),game->players_names.end(),p1.name()) != game->players_names.end()) {
+    if (!p1.is_dead()) {
         const int assassin_price = 3;
         const int price = 7;
-
-        if (this->coins() < assassin_price){
-            throw invalid_argument("You Required to pay at least 3 coins");
-        } else if (this->coins() >= assassin_price && this->coins() < price){
+        if (this->coins() < price){
             this->pay(assassin_price);
             p1.is_dead() = true;
             this->game->players_names.erase(remove(this->game->players_names.begin(), this->game->players_names.end(), p1.name()), this->game->players_names.end());

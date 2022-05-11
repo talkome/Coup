@@ -21,17 +21,20 @@ namespace coup{
             vector<Player*> playing_queue;
             unsigned long i;
             string win;
-            bool begin;
+            bool playing;
+            bool game_over;
 
             Game(){
                 win = "playing";
-                begin = false;
+                playing = false;
+                game_over = false;
                 i = 0;
             }
 
             vector<string> players();
             string turn();
             string& winner();
+            bool& is_over();
     };
 }
 

@@ -15,7 +15,10 @@ string coup::Game::turn() {
 }
 
 string& coup::Game::winner() {
-    if (this->players_names.size() == 1 && this->begin){
+    if(this->playing){
+        throw invalid_argument("No Winner Yet");
+    }
+    if (this->game_over){
         for (size_t j = 0; j < this->playing_queue.size(); ++j) {
             if (!playing_queue[j]->is_dead()){
                 win = playing_queue[j]->name();
@@ -25,6 +28,23 @@ string& coup::Game::winner() {
     } else {
         throw invalid_argument("No Winner Yet");
     }
+}
+
+bool& coup::Game::is_over() {
+    if (this->players_names.size() == 1 && this->playing){
+        int count = 0;
+        for (size_t j = 0; j < this->playing_queue.size(); ++j) {
+            if (!playing_queue[j]->is_dead()){
+                count++;
+            }
+        }
+        if (count == 1){
+            this->playing = false;
+            this->game_over = true;
+        }
+    }
+    return this->game_over;
+
 }
 
 

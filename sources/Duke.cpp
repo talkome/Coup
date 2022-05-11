@@ -24,8 +24,11 @@ void coup::Duke::block(coup::Player &p1) {
         int price = 2;
         if (p1.moves().at(size-1) == FOREIGN_AID){
             p1.pay(price);
+            this->moves().push_back(BLOCK);
+        } else {
+            throw invalid_argument("You Can Only Block Foreign Aid");
         }
-        this->moves().push_back(BLOCK);
+
     } else {
         throw invalid_argument("This Player is lost");
     }

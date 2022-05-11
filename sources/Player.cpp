@@ -22,8 +22,8 @@ void coup::Player::pay(int num) {
 
 void coup::Player::next_turn() {
     size_t size = game->playing_queue.size();
-    this->game->begin = true;
-    if (this->game->players_names.size() != 1){
+    this->game->playing = true;
+    if (!this->game->is_over()){
         game->i++;
         if (game->i >= size) {
             game->i = game->i % size;
@@ -35,20 +35,19 @@ void coup::Player::next_turn() {
                 game->i = game->i % size;
             }
         }
-    } else {
-        throw invalid_argument("Invalid Number of Players");
     }
-
 }
 
 void coup::Player::income() {
-    if (game->turn() == this->name() && !this->must_coup()){
-        this->game->begin = true;
+    if(this->must_coup()){
+        throw invalid_argument("You are required to make a coup");
+    }
+    if (game->turn() == this->name()){
+        this->game->playing = true;
         this->coins()++;
         this->players_moves.push_back(INCOME);
         if (this->coins() >= MAX_COINS){
             mustCoup = true;
-            throw invalid_argument("You are required to make a coup");
         }
         next_turn();
     } else {
@@ -57,12 +56,14 @@ void coup::Player::income() {
 }
 
 void coup::Player::foreign_aid() {
-    if (game->turn() == this->name() && !this->must_coup()){
+    if (this->must_coup()){
+        throw invalid_argument("You are required to make a coup");
+    }
+    if (game->turn() == this->name()){
         this->coins() += FOREIGN_AID_MONEY;
         this->players_moves.push_back(FOREIGN_AID);
         if (this->coins() >= MAX_COINS){
             mustCoup = true;
-            throw invalid_argument("You are required to make a coup");
         }
         next_turn();
     } else {
@@ -71,7 +72,7 @@ void coup::Player::foreign_aid() {
 }
 
 void coup::Player::coup(coup::Player &p1) {
-    if (std::find(game->players_names.begin(), game->players_names.end(), p1.name()) != game->players_names.end()) {
+    if (!p1.is_dead()) {
         int price = COUP_PRICE;
         this->pay(price);
         p1.is_dead() = true;
@@ -134,9 +135,18 @@ void coup::Player::addBack(Player* p) {
 }
 
 void coup::Player::addPlayer(string const &p_name) {
-   if (this->game->players_names.size() < MAX_PLAYERS && find(this->game->players_names.begin(), this->game->players_names.end(), p_name) == this->game->players_names.end() && !this->game->begin) {
-       this->game->players_names.push_back(p_name);
-   } else {
-       throw invalid_argument("Invalid number of players");
-   }
+    if (this->game->playing){
+        throw invalid_argument("No new players can be added after the game has started");
+    }
+    if (this->game->is_over()){
+        throw invalid_argument("No new players can be added after the game has started");
+    }
+    if (this->game->players_names.size() > 1 && find(this->game->players_names.begin(), this->game->players_names.end(), p_name) != this->game->players_names.end()){
+        throw invalid_argument("This name is in use by another player");
+    }
+    if (this->game->players_names.size() < MAX_PLAYERS) {
+        this->game->players_names.push_back(p_name);
+    } else {
+        throw invalid_argument("Invalid number of players");
+    }
 }
