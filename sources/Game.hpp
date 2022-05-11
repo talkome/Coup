@@ -31,7 +31,7 @@ namespace coup{
                 i = 0;
             }
 
-            vector<string> players();
+            vector<string> players() const;
             string turn();
             string& winner();
             bool& is_over();

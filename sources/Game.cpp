@@ -5,7 +5,7 @@
 #include "Game.hpp"
 #include "Player.hpp"
 
-vector<string> coup::Game::players() {
+vector<string> coup::Game::players() const{
     return this->players_names;
 }
 
