@@ -22,20 +22,29 @@ void coup::Ambassador::transfer(coup::Player &p1, coup::Player &p2) {
 }
 
 void coup::Ambassador::block(coup::Player &p1) {
-    if (game->turn() == this->name() && !this->is_dead() && !this->must_coup()){
-        if (p1.role() == "Captain"){
-            size_t size = p1.moves().size();
-            const int price = 2;
-            if (p1.moves().at(size) == STEAL){
-                p1.pay(price);
-            }
-            this->moves().push_back(BLOCK);
-            next_turn();
-        } else {
-            throw invalid_argument("You Can Only Block Captain");
-        }
+    if (this->must_coup()) {
+        throw invalid_argument("You are required to make a coup");
+    }
 
+    if (p1.is_dead()) {
+        throw invalid_argument("This Player is lost");
+    }
+
+    if (p1.role() == "Captain"){
+        size_t size = p1.moves().size();
+        const int first_price = 1;
+        const int second_price = 2;
+        if (p1.moves().at(size-1) == STEAL_FIRST_PRICE) {
+            p1.pay(first_price);
+            p1.robbed->coins() += first_price;
+
+        } else if (p1.moves().at(size-1) == STEAL_SECOND_PRICE) {
+            p1.pay(second_price);
+            p1.robbed->coins() += second_price;
+        }
+        this->moves().push_back(BLOCK);
+        next_turn();
     } else {
-        throw invalid_argument("Wrong Player Turn");
+        throw invalid_argument("You Can Only Block Captain");
     }
 }

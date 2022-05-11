@@ -4,7 +4,7 @@
 
 #include "Captain.hpp"
 
-void coup::Captain::steal(coup::Player &p1) { // TODO: check
+void coup::Captain::steal(coup::Player &p1) {
     if (game->turn() == this->name() && !this->must_coup()){
         const int first_price = 1;
         const int second_price = 2;
@@ -15,11 +15,13 @@ void coup::Captain::steal(coup::Player &p1) { // TODO: check
             } else if (p1.coins() == first_price) {
                 p1.pay(first_price);
                 this->coins() += first_price;
-                this->moves().push_back(STEAL);
+                this->players_moves.push_back(STEAL_FIRST_PRICE);
+                this->robbed = &p1;
             } else {
                 p1.pay(second_price);
                 this->coins() += second_price;
-                this->moves().push_back(STEAL);
+                this->players_moves.push_back(STEAL_SECOND_PRICE);
+                this->robbed = &p1;
             }
             next_turn();
         } else {
@@ -40,7 +42,7 @@ void coup::Captain::block(coup::Player &p1) {
             const int price = 2;
             p1.pay(price);
             size_t size = p1.moves().size();
-            if (p1.moves().at(size) == STEAL){
+            if (p1.moves().at(size) == STEAL_SECOND_PRICE){
                 p1.pay(price);
             }
             this->moves().push_back(BLOCK);

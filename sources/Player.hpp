@@ -10,7 +10,8 @@ using namespace std;
 
 namespace coup{
 
-    enum MOVES { INCOME = 1, FOREIGN_AID = 2, COUP = 3, TAX = 4, BLOCK = 5, TRANSFER = 6, STEAL = 7, ASSASSIN_ATTACK = 8 };
+    enum MOVES { INCOME = 1, FOREIGN_AID = 2, COUP = 3, TAX = 4, BLOCK = 5, TRANSFER = 6, STEAL_FIRST_PRICE = 7,
+            ASSASSIN_ATTACK = 8, STEAL_SECOND_PRICE = 9 };
 
     class Game;
 
@@ -26,6 +27,7 @@ namespace coup{
         int curr_coins;
 
     public:
+        Player* robbed;
 
         // Constructor
         Player(Game& g, string name){
