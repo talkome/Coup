@@ -4,7 +4,6 @@
 
 #include "Player.hpp"
 
-
 using namespace std;
 
 void coup::Player::pay(int num) {
@@ -130,7 +129,7 @@ bool &coup::Player::must_coup() {
     return this->mustCoup;
 }
 
-vector<coup::MOVES> coup::Player::moves(){
+vector<coup::MOVES>& coup::Player::moves(){
     return this->players_moves;
 }
 

@@ -10,7 +10,7 @@ void coup::Ambassador::transfer(coup::Player &p1, coup::Player &p2) {
             const int price = 1;
             p1.pay(price);
             p2.get_paid(price);
-            this->moves().push_back(TRANSFER);
+            this->players_moves.push_back(TRANSFER);
             next_turn();
         } else {
             throw invalid_argument("This Players lost");
@@ -42,7 +42,7 @@ void coup::Ambassador::block(coup::Player &p1) {
             p1.pay(second_price);
             p1.robbed->get_paid(second_price);
         }
-        this->moves().push_back(BLOCK);
+        this->players_moves.push_back(BLOCK);
         next_turn();
     } else {
         throw invalid_argument("You Can Only Block Captain");

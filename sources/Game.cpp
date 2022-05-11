@@ -27,7 +27,6 @@ string& coup::Game::winner() {
         }
     }
     return win;
-
 }
 
 bool& coup::Game::is_over() {

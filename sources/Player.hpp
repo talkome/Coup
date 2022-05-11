@@ -59,7 +59,7 @@ namespace coup{
         void pay(int);
         void get_paid(int);
 
-        vector<MOVES> moves();
+        vector<MOVES>& moves();
 
         string name() const;
         string& name();

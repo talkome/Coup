@@ -46,7 +46,7 @@ void coup::Assassin::block(coup::Player &p1) {
             }
             this->victims_list.clear();
         }
-        this->moves().push_back(BLOCK);
+        this->players_moves.push_back(BLOCK);
         next_turn();
     } else {
         throw invalid_argument("Wrong Player Turn");

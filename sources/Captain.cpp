@@ -49,7 +49,7 @@ void coup::Captain::block(coup::Player &p1) {
             if (p1.moves().at(size) == STEAL_SECOND_PRICE){
                 p1.pay(price);
             }
-            this->moves().push_back(BLOCK);
+            this->players_moves.push_back(BLOCK);
             next_turn();
         } else {
             throw invalid_argument("You Can Only Block Captain");
