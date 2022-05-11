@@ -7,7 +7,7 @@
 void coup::Contessa::block(coup::Assassin &p1) {
     if (!p1.is_dead()) {
         size_t size = p1.moves().size();
-        if (p1.moves().at(size - 1) == COUP) {
+        if (p1.moves().at(size - 1) == ASSASSIN_ATTACK) {
             for (auto & i : p1.victims_list) {
                 addBack(i);
             }

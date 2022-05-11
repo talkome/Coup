@@ -8,14 +8,18 @@
 
 
 void coup::Assassin::coup(coup::Player &p1) {
-    if (!p1.is_dead()) {
+    if (p1.is_dead()){
+        throw invalid_argument("This Player not playing_queue");
+    }
+
+    if (this->game->turn() == this->name()) {
         const int assassin_price = 3;
         const int price = 7;
         if (this->coins() < price){
             this->pay(assassin_price);
             p1.is_dead() = true;
             this->game->players_names.erase(remove(this->game->players_names.begin(), this->game->players_names.end(), p1.name()), this->game->players_names.end());
-            this->players_moves.push_back(COUP);
+            this->players_moves.push_back(ASSASSIN_ATTACK);
             this->victims_list.push_back(&p1);
             this->must_coup() = false;
             next_turn();
@@ -30,7 +34,7 @@ void coup::Assassin::coup(coup::Player &p1) {
         }
 
     } else {
-        throw invalid_argument("This Player not playing_queue");
+
     }
 }
 
