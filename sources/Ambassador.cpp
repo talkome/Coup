@@ -10,7 +10,7 @@ void coup::Ambassador::transfer(coup::Player &p1, coup::Player &p2) {
             const int price = 1;
             p1.pay(price);
             p2.get_paid(price);
-            this->players_moves.push_back(TRANSFER);
+            this->moves().push_back(TRANSFER);
             next_turn();
         } else {
             throw invalid_argument("This Players lost");

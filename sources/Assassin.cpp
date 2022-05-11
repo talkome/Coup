@@ -16,7 +16,7 @@ void coup::Assassin::coup(coup::Player &p1) {
             this->pay(assassin_price);
             p1.is_dead() = true;
             this->game->players_names.erase(remove(this->game->players_names.begin(), this->game->players_names.end(), p1.name()), this->game->players_names.end());
-            this->players_moves.push_back(ASSASSIN_ATTACK);
+            this->moves().push_back(ASSASSIN_ATTACK);
             this->victims_list.push_back(&p1);
             this->must_coup() = false;
             next_turn();
@@ -24,7 +24,7 @@ void coup::Assassin::coup(coup::Player &p1) {
             this->pay(price);
             p1.is_dead() = true;
             this->game->players_names.erase(remove(this->game->players_names.begin(), this->game->players_names.end(), p1.name()), this->game->players_names.end());
-            this->players_moves.push_back(COUP);
+            this->moves().push_back(COUP);
             this->victims_list.push_back(&p1);
             this->must_coup() = false;
             next_turn();
@@ -46,7 +46,7 @@ void coup::Assassin::block(coup::Player &p1) {
             }
             this->victims_list.clear();
         }
-        this->players_moves.push_back(BLOCK);
+        this->moves().push_back(BLOCK);
         next_turn();
     } else {
         throw invalid_argument("Wrong Player Turn");

@@ -12,7 +12,7 @@ void coup::Contessa::block(coup::Assassin &p1) {
                 addBack(i);
             }
             p1.victims_list.clear();
-            this->players_moves.push_back(BLOCK);
+            this->moves().push_back(BLOCK);
         } else {
             throw invalid_argument("Contessa Can Only Block Assassin Attack");
         }

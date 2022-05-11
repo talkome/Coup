@@ -16,12 +16,12 @@ void coup::Captain::steal(coup::Player &p1) {
             if (p1.coins() == first_price) {
                 p1.pay(first_price);
                 this->get_paid(first_price);
-                this->players_moves.push_back(STEAL_FIRST_PRICE);
+                this->moves().push_back(STEAL_FIRST_PRICE);
                 this->robbed = &p1;
             } else {
                 p1.pay(second_price);
                 this->get_paid(second_price);
-                this->players_moves.push_back(STEAL_SECOND_PRICE);
+                this->moves().push_back(STEAL_SECOND_PRICE);
                 this->robbed = &p1;
             }
             next_turn();
@@ -49,7 +49,7 @@ void coup::Captain::block(coup::Player &p1) {
             if (p1.moves().at(size) == STEAL_SECOND_PRICE){
                 p1.pay(price);
             }
-            this->players_moves.push_back(BLOCK);
+            this->moves().push_back(BLOCK);
             next_turn();
         } else {
             throw invalid_argument("You Can Only Block Captain");
