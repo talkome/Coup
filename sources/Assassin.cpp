@@ -4,9 +4,6 @@
 
 #include "Assassin.hpp"
 
-#define BLOCK_PRICE 7
-
-
 void coup::Assassin::coup(coup::Player &p1) {
     if (p1.is_dead()){
         throw invalid_argument("This Player not playing_queue");
@@ -40,7 +37,8 @@ void coup::Assassin::coup(coup::Player &p1) {
 
 void coup::Assassin::block(coup::Player &p1) {
     if (game->turn() == this->name() && !this->must_coup()){
-        p1.pay(BLOCK_PRICE);
+        const int price = 7;
+        p1.pay(price);
         size_t size = p1.moves().size();
         if (p1.moves().at(size) == COUP){
             for (size_t i = 0; i < this->victims_list.size(); ++i) {

@@ -4,11 +4,6 @@
 
 #include "Player.hpp"
 
-#define MAX_PLAYERS 6
-#define MAX_COINS 10
-#define COUP_PRICE 7
-#define FOREIGN_AID_MONEY 2
-
 
 using namespace std;
 
@@ -22,7 +17,8 @@ void coup::Player::pay(int num) {
 
 void coup::Player::get_paid(int num) {
     this->coins() += num;
-    if (this->coins() >= MAX_COINS){
+    const int max_coins = 10;
+    if (this->coins() >= max_coins){
         this->must_coup() = true;
     }
 }
@@ -71,7 +67,7 @@ void coup::Player::foreign_aid() {
         throw invalid_argument("You are required to make a coup");
     }
     if (game->turn() == this->name()){
-        const int price = FOREIGN_AID_MONEY;
+        const int price = 2;
         this->get_paid(price);
         this->players_moves.push_back(FOREIGN_AID);
         next_turn();
@@ -82,7 +78,7 @@ void coup::Player::foreign_aid() {
 
 void coup::Player::coup(coup::Player &p1) {
     if (!p1.is_dead()) {
-        int price = COUP_PRICE;
+        const int price = 7;
         this->pay(price);
         p1.is_dead() = true;
         this->game->players_names.erase(remove(this->game->players_names.begin(), this->game->players_names.end(), p1.name()), this->game->players_names.end());
@@ -156,7 +152,8 @@ void coup::Player::addPlayer(string const &p_name) {
     if (this->game->is_over()){
         throw invalid_argument("No new players can be added after the game has started");
     }
-    if (this->game->players_names.size() < MAX_PLAYERS) {
+    const int max_player = 6;
+    if (this->game->players_names.size() < max_player) {
         this->game->players_names.push_back(p_name);
     } else {
         throw invalid_argument("Invalid number of players");

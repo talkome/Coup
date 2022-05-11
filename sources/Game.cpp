@@ -16,18 +16,18 @@ string coup::Game::turn() {
 
 string& coup::Game::winner() {
     if(this->playing){
-        throw invalid_argument("No Winner Yet");
+        throw invalid_argument("There is no winner at the moment the game is still running");
     }
-    if (this->game_over){
-        for (size_t j = 0; j < this->playing_queue.size(); ++j) {
-            if (!playing_queue[j]->is_dead()){
-                win = playing_queue[j]->name();
-            }
+    if (!this->game_over) {
+        throw invalid_argument("No winner at the moment The game is not over yet");
+    }
+    for (size_t j = 0; j < this->playing_queue.size(); ++j) {
+        if (!playing_queue[j]->is_dead()) {
+            win = playing_queue[j]->name();
         }
-        return win;
-    } else {
-        throw invalid_argument("No Winner Yet");
     }
+    return win;
+
 }
 
 bool& coup::Game::is_over() {

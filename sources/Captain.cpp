@@ -12,7 +12,8 @@ void coup::Captain::steal(coup::Player &p1) {
         if (!p1.is_dead()){
             if (p1.coins() < first_price) {
                 throw invalid_argument("This Player Has No Money");
-            } else if (p1.coins() == first_price) {
+            }
+            if (p1.coins() == first_price) {
                 p1.pay(first_price);
                 this->get_paid(first_price);
                 this->players_moves.push_back(STEAL_FIRST_PRICE);
