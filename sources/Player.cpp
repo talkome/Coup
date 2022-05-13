@@ -51,7 +51,7 @@ void coup::Player::income() {
         this->game->playing = true;
         const int price = 1;
         this->get_paid(price);
-        this->players_moves.push_back(INCOME);
+        this->moves().push_back(INCOME);
         next_turn();
     } else {
         throw invalid_argument("Wrong Player Turn");
@@ -68,7 +68,7 @@ void coup::Player::foreign_aid() {
     if (game->turn() == this->name()){
         const int price = 2;
         this->get_paid(price);
-        this->players_moves.push_back(FOREIGN_AID);
+        this->moves().push_back(FOREIGN_AID);
         next_turn();
     } else {
         throw invalid_argument("Wrong Player Turn");
