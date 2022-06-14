@@ -22,11 +22,13 @@ namespace coup{
         string player_name;
         string player_roles;
         vector<MOVES> players_moves;
+
         bool isDead;
         bool mustCoup;
         int curr_coins;
 
     public:
+        vector<Player*> victims_list;
         Player* robbed;
 
         // Constructor
@@ -59,6 +61,8 @@ namespace coup{
         void pay(int);
         void get_paid(int);
 
+        virtual void block(Player &p1) = 0;
+
         vector<MOVES>& moves();
 
         string name() const;
@@ -78,5 +82,6 @@ namespace coup{
 
         void addBack(Player*);
         void addPlayer(string const &);
+
     };
 }

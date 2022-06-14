@@ -23,6 +23,6 @@ namespace coup{
         void coup(Player &p1) override;
         string role() const override;
         string& role() override;
-        void block(Player &p1);
+        void block(Player &p1) override;
     };
 }

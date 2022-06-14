@@ -29,3 +29,21 @@ string &coup::Contessa::role() {
 string coup::Contessa::role() const {
     return this->player_roles;
 }
+
+void coup::Contessa::block(coup::Player &p1) {
+    if (!p1.is_dead() && p1.role() == "Assassin") {
+        size_t size = p1.moves().size();
+        if (p1.moves().at(size - 1) == ASSASSIN_ATTACK) {
+            for (auto & i : p1.victims_list) {
+                addBack(i);
+            }
+            p1.victims_list.clear();
+            this->moves().push_back(BLOCK);
+        } else {
+            throw invalid_argument("Contessa Can Only Block Assassin Attack");
+        }
+
+    } else {
+        throw invalid_argument("This Player is lost");
+    }
+}

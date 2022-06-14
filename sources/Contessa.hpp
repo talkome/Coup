@@ -10,6 +10,7 @@ namespace coup {
     class Contessa : public Player {
 
     public:
+
         Contessa(coup::Game& g, string n) : Player(g,n,0, false) {
             player_roles = "Contessa";
             addPlayer(n);
@@ -18,6 +19,7 @@ namespace coup {
 
         string role() const override;
         string& role() override;
+        void block(Player &p1) override;
         void block(coup::Assassin&);
     };
 }

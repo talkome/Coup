@@ -18,10 +18,7 @@ namespace coup{
             }
 
         void transfer(Player &p1, Player &p2);
-        void block(Player &p1);
-
+        void block(Player &p1) override;
     };
-
-
 }
 
