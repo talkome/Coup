@@ -2,39 +2,35 @@
  * Created by talko on 4/24/22.
  */
 
-#pragma once
 #include <string>
 #include <vector>
 #include <stdexcept>
-#include <set>
 
 using namespace std;
 
-namespace coup{
+#ifndef MY_SYMBOL_HH
+#define MY_SYMBOL_HH
 
-    class Player;
+namespace coup{
 
     class Game {
 
         public:
             vector<string> players_names;
-            vector<Player*> playing_queue;
             unsigned long i;
+
             string win;
-            bool playing;
-            bool game_over;
 
             Game(){
                 win = "playing";
-                playing = false;
-                game_over = false;
                 i = 0;
             }
 
             vector<string> players() const;
-            string turn();
-            string& winner();
-            bool& is_over();
+            string turn() const;
+            string winner() const;
     };
 }
+
+#endif
 
